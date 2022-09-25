@@ -1,6 +1,6 @@
 # Geek Text
 
-Geek Text, online web application bookstore built using the MERN stack.
+Geek Text is an online web application bookstore built using the MERN stack.
 
 This is the backend for the Geek Text web app developed as a group project for CEN 4010 Software Engineering.
 

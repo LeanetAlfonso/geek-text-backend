@@ -329,24 +329,11 @@ class AccountManager {
                     "content": content,
                     "rating": rating
                 };
-                // newReview.save()
-                //     .then(() => res.json('Review added!'))
-                //     .catch(err => res.status(400).json('Error: ' + err));
-
                 Book.updateOne(
                     { _id: bookId },
                     { $push: { comments: newReview } },
                     done
                 );
-
-
-                // bookDoc.comments.push({
-                //     commenter,
-                //     title,
-                //     content,
-                //     rating
-                // });
-
                 return response.status(200).json({ msg: 'Review successfully added' });
             });
 
@@ -473,11 +460,9 @@ class AccountManager {
                         'creditCards.$.cardCVC': cardCVC
                     }
                 }).then(result => {
-                    return response.send(result);
+                    return response.status(200).json({ msg: 'Credit card information added' });
                 });
 
-
-                return response.status(200).json({ msg: 'Credit card information added' });
             });
 
         } catch (error) {
@@ -491,7 +476,7 @@ class AccountManager {
 
             form.parse(request, async (error, fields, files) => {
                 if (error) {
-                    return response.status(500).json({ msg: 'Failed to add new credit card information' });
+                    return response.status(500).json({ msg: 'Failed to update shipping information' });
                 }
 
                 const {
@@ -520,15 +505,13 @@ class AccountManager {
                         'shippingAddress.$.country': country
                     }
                 }).then(result => {
-                    return response.send(result);
+                    return response.status(200).json({ msg: 'Shipping information updated' });
                 });
 
-
-                return response.status(200).json({ msg: 'Credit card information added' });
             });
 
         } catch (error) {
-            return response.status(500).json({ msg: 'Failed to add new credit card information' });
+            return response.status(500).json({ msg: 'Failed to update shipping information' });
         }
     }
 

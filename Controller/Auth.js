@@ -13,8 +13,17 @@ export class AuthController {
           return response.status(500).json({ msg: "Network Error: Failed to signup user" });
         }
         const { email, name, nickname, password } = fields;
-        if (!email || !name || !nickname || !password) {
-          return response.status(400).json({ msg: 'All fields are required' });
+        if (!email) {
+          return response.status(400).json({ msg: 'You must enter an email' });
+        }
+        if (!name) {
+          return response.status(400).json({ msg: 'You must enter a name' });
+        }
+        if (!nickname) {
+          return response.status(400).json({ msg: 'You must enter a nickname (this will be your username)' });
+        }
+        if (!password) {
+          return response.status(400).json({ msg: 'You must enter a password' });
         }
 
         if (password.length < 8) {
@@ -47,6 +56,10 @@ export class AuthController {
         if (symbol.test(password)) { // Good
         } else {
           return response.status(400).json({ msg: 'Password must constain at least 1 symbol' });
+        }
+        const isNicknameExisting = await user.findOne({ nickname: nickname });
+        if (isNicknameExisting) {
+          return response.status(400).json({ msg: 'An account with this nickname already exists. Please login or pick a different nickname' });
         }
 
         const isEmailExisting = await user.findOne({ email: email });
